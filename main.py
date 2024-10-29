@@ -19,6 +19,21 @@ class ParisScene(Scene):
         
         self.light = LightSource(self, position=[5., 3., 5.])
 
+        # Load the Paris 2024 Olympics logo model
+        logo_meshes = load_obj_file('models/logo-jo2024.obj')
+
+        # Create a transformation matrix with 90-degree rotation and y-translation
+        rotation_matrix = rotationMatrixX(np.radians(90))  # Rotate 90 degrees around X-axis
+        translation_matrix = translationMatrix([0, 45, 0])  # Move to y=45
+        # Combine rotation and translation into one matrix
+        transformation_matrix = np.matmul(translation_matrix, rotation_matrix)
+        self.paris_logo = DrawModelFromMesh(
+            scene=self,
+            M=transformation_matrix,  # Adjust the position and scale as needed
+            mesh=logo_meshes[0],  # Use the first mesh from the OBJ file
+            shader=TextureShader()  # Or use TextureShader() if the logo has textures
+        )
+
         # Load the Eiffel Tower model
         eiffel_meshes = load_obj_file('models/eiffel_tower.obj')
         # Check if the model has been loaded correctly
@@ -36,6 +51,10 @@ class ParisScene(Scene):
             # Add the Eiffel Tower to the scene
             self.add_model(self.eiffel_tower)
 
+            self.add_model(self.paris_logo)
+
+          
+
 
     def keyboard(self, event):
         '''
@@ -50,6 +69,12 @@ class ParisScene(Scene):
         elif event.key == pygame.K_2:
             print('--> using Texture shading')
             self.eiffel_tower.bind_shader(TextureShader())
+        
+        elif event.key == pygame.K_s:
+            self.is_animating = True  # Start animation
+            print('--> Start animation')
+        elif event.key == pygame.K_f:
+            self.is_animating = False  # Stop animation
 
 
     def draw(self):
