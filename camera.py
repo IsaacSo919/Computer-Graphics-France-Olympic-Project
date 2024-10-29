@@ -12,7 +12,7 @@ class Camera:
         self.phi = 0.               # azimuth angle
         self.psi = 0.               # zenith angle
         self.distance = 50.0         # distance of the camera to the centre point
-        self.center = [0., 0., 0.]  # position of the centre
+        self.center = [0., -25., 0.]  # position of the centre
         self.update()               # calculate the view matrix
 
     def update(self):
