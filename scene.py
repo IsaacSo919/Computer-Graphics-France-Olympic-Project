@@ -58,7 +58,7 @@ class Scene:
 
         # initialise the projective transform
         near = 1.5
-        far = 50
+        far = 500
         left = -1.0
         right = 1.0
         top = -1.0
